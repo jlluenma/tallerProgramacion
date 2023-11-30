@@ -1,0 +1,137 @@
+package proyectoTallerProgramacion.v1;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class buscaminas1 {
+    private static final int nFilas = 10;
+    private static final int nColumnas = 10;
+    private static final int nMinas = 10;
+    private static final char sMina = '◉';
+    //private static final char sVacio = ' ';
+    private static final char sCubierto = '▀';
+    private char[][] tablero;
+    private boolean[][] minas;
+    private boolean[][] descubiertas;
+
+    // Inicializa el tablero con celdas vacías
+    public void inicializarTablero() { //Recorremos todos los espacios del arreglo bi y los llenamos con el símbolo
+        for (int i = 0; i < nFilas; i++) {
+            for (int j = 0; j < nColumnas; j++) {
+                tablero[i][j] = sCubierto;
+            }
+        }
+    }
+
+    // Coloca las minas en el tablero de forma aleatoria
+    private void colocarMinas() {
+        Random random = new Random();
+        int minasColocadas = 0;
+        while (minasColocadas < nMinas) {
+            int fila = random.nextInt(nFilas);
+            int columna = random.nextInt(nColumnas);
+            if (!minas[fila][columna]) {
+                minas[fila][columna] = true;
+                minasColocadas++;
+            }
+        }
+    }
+
+    // Muestra el tablero actual del juego
+    public buscaminas1() { //Creamos los arreglos bidimensionales
+        tablero = new char[nFilas][nColumnas];
+        minas = new boolean[nFilas][nColumnas];
+        descubiertas = new boolean[nFilas][nColumnas];
+        inicializarTablero();
+        colocarMinas();
+    }
+
+    private void mostrarTablero() {
+        System.out.println("Tablero de Buscaminas:");
+        System.out.println();
+        System.out.print("   ");
+        for (int j = 0; j < nColumnas; j++) {
+            System.out.print(j + " ");
+        }
+        System.out.println();
+        System.out.print("  ");
+        for (int j = 0; j < nColumnas; j++) {
+            System.out.print("--");
+        }
+        System.out.println();
+        for (int i = 0; i < nFilas; i++) {
+            System.out.print(i + "| ");
+            for (int j = 0; j < nColumnas; j++) {
+                if (descubiertas[i][j]) {
+                    System.out.print(tablero[i][j] + " ");
+                } else {
+                    System.out.print(sCubierto + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    // Verifica si las coordenadas dadas son válidas dentro del tablero
+    private boolean coordenadasValidas(int fila, int columna) {
+        return fila >= 0 && fila < nFilas && columna >= 0 && columna < nColumnas;
+    }
+
+    // Descubre una celda en las coordenadas dadas
+    private void descubrirCelda(int fila, int columna) {
+        if (coordenadasValidas(fila, columna) && !descubiertas[fila][columna]) {
+            descubiertas[fila][columna] = true;
+            if (minas[fila][columna]) {
+                tablero[fila][columna] = sMina;
+                mostrarTablero();
+                System.out.println("¡Has perdido! Has encontrado una mina.");
+                System.exit(0);
+            } else {
+                int minasCercanas = contarMinasCercanas(fila, columna);
+                if (minasCercanas > 0) {
+                    tablero[fila][columna] = (char) (minasCercanas + '0');
+                } else {
+                    tablero[fila][columna] = sCubierto;
+                    descubrirCelda(fila - 1, columna - 1);
+                    descubrirCelda(fila - 1, columna);
+                    descubrirCelda(fila - 1, columna + 1);
+                    descubrirCelda(fila, columna - 1);
+                    descubrirCelda(fila, columna + 1);
+                    descubrirCelda(fila + 1, columna - 1);
+                    descubrirCelda(fila + 1, columna);
+                    descubrirCelda(fila + 1, columna + 1);
+                }
+            }
+        }
+    }
+
+    // Cuenta la cantidad de minas cercanas a una celda
+    private int contarMinasCercanas(int fila, int columna) {
+        int contador = 0;
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (coordenadasValidas(i, j) && minas[i][j]) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
+    }
+
+    // Inicia el juego y solicita las coordenadas al usuario
+    public void jugar() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            mostrarTablero();
+            System.out.print("Ingresa la fila (0-" + (nFilas - 1) + "): ");
+            int fila = scanner.nextInt();
+            System.out.print("Ingresa la columna (0-" + (nColumnas - 1) + "): ");
+            int columna = scanner.nextInt();
+            descubrirCelda(fila, columna);
+        }
+    }
+}
+public static void main(String[] args) {
+        buscaminas1 buscaminas = new buscaminas1();
+        buscaminas.jugar();
+    }
