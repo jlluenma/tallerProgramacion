@@ -1,26 +1,38 @@
-package proyectoTallerProgramacion.v4;
+package proyectoTallerProgramacion.v5;
 
 import java.util.Random;
 
 public class minas {
-    public static void colocarMinas(mostrarTablero tablero) {
-        int nMinas = tablero.getnMinas();
-        int nFilas = tablero.getnFilas();
-        int nColumnas = tablero.getnColumnas();
-        boolean[][] minas = tablero.getMinas();
+    private static final int nMinas = 10;
+    boolean[][] minas = mostrarTablero.minas;
+    int nFilas = mostrarTablero.nFilas;
+    int nColumnas = mostrarTablero.nColumnas;
+    Random aleatorio = new Random();
+    validador nuevoValidador = new validador();
 
-        Random aleatorio = new Random();
+    public boolean[][] colocarMinas() {
         int minasColocadas = 0;
-
-        while (minasColocadas < nMinas) {
+        while (minasColocadas < nMinas) { //Coloca minas mientras sea menor a 10
             int fila = aleatorio.nextInt(nFilas);
-            int columna = aleatorio.nextInt(nColumnas);
-
-            if (!minas[fila][columna]) {
+            int columna = aleatorio.nextInt(nColumnas); //Coloca minas en coordenadas aleatorias
+            if (!minas[fila][columna]) { //Verifica si ya existe una mina en esa posición
                 minas[fila][columna] = true;
                 minasColocadas++;
             }
         }
-        tablero.setMinas(minas);
+        return minas;
     }
+
+    public int contarMinasCercanas(int fila, int columna) {
+        int contador = 0;
+        for (int i = fila - 1; i <= fila + 1; i++) {
+            for (int j = columna - 1; j <= columna + 1; j++) {
+                if (nuevoValidador.coordenadasValidas(i, j) && minas[i][j]) {
+                    contador++;
+                }
+            }
+        }
+        return contador;
+    }
+
 }
