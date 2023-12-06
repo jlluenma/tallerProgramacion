@@ -5,25 +5,17 @@ import java.util.Scanner;
 public class principal {
     public static void main(String[] args) {
         mostrarTablero tablero = new mostrarTablero();
-        Scanner lector = new Scanner(System.in);
-        juego nuevoJuego = new juego();
-
         StringBuilder tableroInicial = tablero.inicializarTablero();
-        System.out.print(tableroInicial);
+        lectorDatos establecerCoordenadas = new lectorDatos();
+        juego nuevoJuego = new juego();
+        Scanner scann = new Scanner(System.in);
 
-        int nFilas = mostrarTablero.nFilas;
-        int nColumnas = mostrarTablero.nColumnas;
-
- /*       minas nuevoContador = new minas();
-        int nMinas = nuevoContador.contarMinasCercanas(nFilas,nColumnas);*/
-        while (true) {
-            tablero.inicializarTablero();
-            System.out.print("Ingresa la fila (0-" + (nFilas - 1) + "): ");
-            nFilas = lector.nextInt();
-            System.out.print("Ingresa la columna (0-" + (nColumnas - 1) + "): ");
-            nColumnas = lector.nextInt();
-            nuevoJuego.descubrirCelda(nFilas,nColumnas);
-        }
-
+            System.out.println(tableroInicial);
+            System.out.println("Ingrese la fila: ");
+            int fila = scann.nextInt();
+            System.out.println("Ingrese la columna: ");
+            int columna = scann.nextInt();
+            //char[][] tableroA = nuevoJuego.descubrirCelda(fila, columna);
+            establecerCoordenadas.establecerN(fila, columna);
     }
 }
