@@ -5,15 +5,12 @@ public class mostrarTablero {
     private static int nColumnas = 11;
     public static final char sCubierto = '▀';
     private static final String saltoLinea = "\n";
-    public char[][] tablero;
-    public static boolean[][] minas;
-    public static boolean[][] descubiertas;
+    public char[][] tablero = new char[nFilas][nColumnas];
+    public static boolean[][] minas = new boolean[nFilas][nColumnas];
+    public static boolean[][] descubiertas = new boolean[nFilas][nColumnas];
     private StringBuilder tableroPrint = new StringBuilder("");
 
     public StringBuilder inicializarTablero() {
-        tablero = new char[nFilas][nColumnas];
-        minas = new boolean[nFilas][nColumnas];
-        descubiertas = new boolean[nFilas][nColumnas];
         for (int i = 0; i < nFilas; i++) {
             for (int j = 0; j < nColumnas; j++) {
                 tablero[i][j] = sCubierto;
@@ -32,7 +29,7 @@ public class mostrarTablero {
         }
         return tableroPrint;
     }
-    /*
+/*
     public StringBuilder actualizarTablero(){
         System.out.print("TABLERO DE BUSCAMINAS(9x9) \n");
         System.out.print("\n  ");
@@ -65,6 +62,10 @@ public class mostrarTablero {
         return nFilas;
     }
 
+    public static int getnColumnas() {
+        return nColumnas;
+    }
+}
     public static int getnColumnas() {
         return nColumnas;
     }
