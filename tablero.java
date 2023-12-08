@@ -17,17 +17,17 @@ public class tablero {
     public void mostrarTablero(char [][] cTabla, boolean[][] bDescubiertas) {
         System.out.print("TABLERO DE BUSCAMINAS(9x9) \n");
         System.out.print("\n  ");
-        for (int j = 0; j < nColumnas; j++) { //Imprime el encabezado con el número de columnas
+        for (int j = 1; j < nColumnas; j++) { //Imprime el encabezado con el número de columnas
             System.out.print(" " + j + "  ");
         }
         System.out.print("\n  ");
-        for (int j = 0; j < nColumnas; j++) {
+        for (int j = 1; j < nColumnas; j++) {
             System.out.print("----");
         }
         System.out.println();
-        for (int i = 0; i < nFilas; i++) {
-            System.out.print(i + "|");
-            for (int j = 0; j < nColumnas; j++) {
+        for (int i = 1; i < nFilas; i++) {
+            System.out.printf("%2d" + "|", i);
+            for (int j = 1; j < nColumnas; j++) {
                 if (bDescubiertas[i][j]) {
                     System.out.print(" " + cTabla[i][j] + " |");
                 } else {
