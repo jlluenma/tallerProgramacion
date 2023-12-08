@@ -7,7 +7,7 @@ public class jugar {
     int nFilas = tablero.getnFilas();
     int nColumnas = tablero.getnColumnas();
     private static char[][] cTabla;
-    private static char cMina = '◉';
+    private static final char cMina = '◉';
     private static boolean [][] bMinas;
     boolean [][] bCubiertas;
     boolean [][] bDescubiertas;
@@ -42,7 +42,7 @@ public class jugar {
                 // Verificar condición de victoria
                 if (todasCeldasDescubiertas()) {
                     System.out.println("""
-                             *:・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧(｡◕‿‿◕｡)*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧
+                            ・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧(｡◕‿‿◕｡)*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・ﾟ✧*:・
                             ¡Felicidades! Has descubierto todas las celdas sin minas. ¡Has ganado!
                             """);
                     System.exit(0);
