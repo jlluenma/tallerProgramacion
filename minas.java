@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class minas {
     private static final int nMinas = 10;
-    private static int nFilas = tablero.getnFilas();
-    private static int nColumnas = tablero.getnColumnas();
+    private static final int nFilas = tablero.getnFilas();
+    private static final int nColumnas = tablero.getnColumnas();
     static Random aleatorio = new Random();
     static validador nuevoValidador = new validador();
 
@@ -24,9 +24,9 @@ public class minas {
         int contador = 0;
         for (int i = fila - 1; i <= fila + 1; i++) {
             for (int j = columna - 1; j <= columna + 1; j++) {
-                if (nuevoValidador.coordenadasValidas(i, j) && bMinas[i][j]) {
-                    contador++;
-                }
+                    if (nuevoValidador.coordenadasValidas(i, j) && bMinas[i][j]) {
+                        contador++;
+                    }
             }
         }
         return contador;
